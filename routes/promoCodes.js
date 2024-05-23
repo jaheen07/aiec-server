@@ -41,8 +41,6 @@ router.delete("/promo/:id", async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-=======
 
 // update promo
 router.patch("/updatepromo/:id", async (req, res) => {
@@ -69,5 +67,4 @@ router.patch("/updatepromo/:id", async (req, res) => {
   }
 });
 
->>>>>>> 15cf662 (check)
 module.exports = router;
