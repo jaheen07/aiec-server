@@ -64,11 +64,7 @@ router.patch("/update-blog/:id", async (req, res) => {
     res.status(500).json({ message: "An error occurred" });
   }
 });
-<<<<<<< HEAD
-// update blog
-=======
 // update blog comment
->>>>>>> 15cf662 (check)
 router.patch("/update-comment/:id", async (req, res) => {
   try {
     const id = req.params.id;
