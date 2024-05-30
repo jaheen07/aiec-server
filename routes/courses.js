@@ -80,6 +80,7 @@ router.patch("/update-course/:id", async (req, res) => {
         courseModel: updatedCourse.courseModel,
         courseFee: updatedCourse.courseFee,
         discount: updatedCourse.discount,
+        spdiscount:updatedCourse.spdiscount,
         duration: updatedCourse.duration,
         features: updatedCourse.features,
         Collaborators: updatedCourse.Collaborators,
