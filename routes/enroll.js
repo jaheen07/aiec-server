@@ -63,7 +63,7 @@ router.get("/singleEnrolledCourse/:id", async (req, res) => {
 
 router.post("/markComplete", async (req, res) => {
   try {
-    const { userId, courseId, moduleName, contentName } = req.body;
+    const { userId, courseId, moduleName, contentName, progress } = req.body;
 
     // Find the user's enrollment for the specified course
     const enrollment = await enrollCollection.findOne({ userId, courseId });
@@ -100,6 +100,7 @@ router.post("/markComplete", async (req, res) => {
       {
         $set: {
           [`course.modules.${moduleIndex}.contents.${contentIndex}.completed`]: true,
+          progress:progress,
         },
       }
     );
