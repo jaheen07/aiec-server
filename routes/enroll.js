@@ -65,6 +65,8 @@ router.post("/markComplete", async (req, res) => {
   try {
     const { userId, courseId, moduleName, contentName, progress } = req.body;
 
+    console.log('progress');
+
     // Find the user's enrollment for the specified course
     const enrollment = await enrollCollection.findOne({ userId, courseId });
 
