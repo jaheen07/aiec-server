@@ -29,6 +29,49 @@ router.delete("/singlefeedback/:id", async (req, res) => {
   res.send(result);
 });
 
+//update review
+router.patch("/showonhome/:id", async (req, res) => {
+  const id = req.params.id;
+  const query = { _id: new ObjectId(id) };
+  const option = { upsert: true };
+  const data = req.body;
+
+
+  const result =  await feedbackCollection.updateOne(
+    query,
+    {
+      $set: {
+        show_on_home: data.show_on_home,
+      },
+    },
+    option,
+  );
+  res.send(result);
+});
+
+
+//update publish
+router.patch("/publish/:id", async (req, res) => {
+  const id = req.params.id;
+  const query = { _id: new ObjectId(id) };
+  const option = { upsert: true };
+  const data = req.body;
+
+
+  const result =  await feedbackCollection.updateOne(
+    query,
+    {
+      $set: {
+        destination_page: data.destination_page,
+      },
+    },
+    option,
+  );
+  res.send(result);
+});
+
+
+
 //get all review
 router.get("/review", async (req, res) => {
   const result = await reviewCollection.find().sort({ createAt: -1 }).toArray();

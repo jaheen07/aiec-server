@@ -14,7 +14,7 @@ router.get("/users",verifyJWT, async (req, res) => {
   }
 });
 // get consultants
-router.get("/allconsultants", async (req, res) => {
+router.get("/allconsultants",verifyJWT, async (req, res) => {
   try {
     const consultants = await usersCollection.find({ role: "consultant" }).sort({ createdAt: -1 }).toArray();
     res.send(consultants);

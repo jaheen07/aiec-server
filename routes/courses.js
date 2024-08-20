@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const { ObjectId } = require("mongodb");
-const { coursesCollection } = require("../index");
+const { coursesCollection , verifyJWT} = require("../index");
 
 //get all courses
-router.get("/courses", async (req, res) => {
+router.get("/courses",verifyJWT, async (req, res) => {
   const result = await coursesCollection
     .find()
     .sort({ createAt: -1 })
@@ -77,6 +77,7 @@ router.patch("/update-course/:id", async (req, res) => {
         coverVideo: updatedCourse.coverVideo,
         courseType: updatedCourse.courseType,
         liveInstruction: updatedCourse.liveInstruction,
+        wpgrouplink: updatedCourse.wpgrouplink,
         courseModel: updatedCourse.courseModel,
         courseFee: updatedCourse.courseFee,
         discount: updatedCourse.discount,
