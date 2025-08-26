@@ -2,14 +2,30 @@ const express = require("express");
 const router = express.Router();
 const { ObjectId } = require("mongodb");
 const { coursesCollection , verifyJWT} = require("../index");
+// const jwt = require("jsonwebtoken");
 
 //get all courses
-router.get("/courses",verifyJWT, async (req, res) => {
+router.get("/courses", async (req, res) => {
+  const token = req.header("authorization");
+  if(token === process.env.ACCESS_TOKEN_SECRET){
   const result = await coursesCollection
     .find()
     .sort({ createAt: -1 })
     .toArray();
   res.send(result);
+  }
+  else{
+    if (!token) {
+    return res
+      .status(401)
+      .send({ error: true, message: "unauthorized accessed!"});
+    }
+    else{
+      return res
+      .status(401)
+      .send({ error: true, message: "unauthorized access!"});
+    }
+  }
 });
 //get courses by ID
 router.get("/singlecourse/:id", async (req, res) => {
@@ -88,9 +104,9 @@ router.patch("/update-course/:id", async (req, res) => {
         category: updatedCourse.category,
         mainCategory: updatedCourse.mainCategory,
         instructor: updatedCourse.instructor,
-        insDesignation: updatedCourse.insDesignation,
-        insDescription: updatedCourse.insDescription,
-        insImage: updatedCourse.insImage,
+        // insDesignation: updatedCourse.insDesignation,
+        // insDescription: updatedCourse.insDescription,
+        // insImage: updatedCourse.insImage,
         modules: updatedCourse.modules,
         startDate: updatedCourse.startDate,
         endDate: updatedCourse.endDate,

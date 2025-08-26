@@ -10,22 +10,36 @@ app.use(cors());
 app.use(express.json());
 
 exports.verifyJWT = (req, res, next) => {
-  const authorization = req.headers.authorization;
+  const authorization = req.header("authorization");
   if (!authorization) {
     return res
       .status(401)
-      .send({ error: true, message: "unauthorized access" });
+      .send({ error: true, message: "unauthorized accessed !"});
+      
   }
+  
   const token = authorization.split(" ")[1];
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-    if (err) {
-      return res
+  const decode = jwt.verify(token,process.env.ACCESS_TOKEN_SECRET);
+
+  if(!decode){
+    return res
         .status(401)
         .send({ error: true, message: "unauthorized access" });
-    }
-    req.decoded = decoded;
+  }
+  else{
+    req.decoded = decode;
     next();
-  });
+  }
+  
+  // jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+  //   if (err) {
+  //     return res
+  //       .status(401)
+  //       .send({ error: true, message: "unauthorized access" });
+  //   }
+  //   req.decoded = decoded;
+  //   next();
+  // });
 };
 
 // Data-Base start
